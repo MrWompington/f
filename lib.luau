@@ -4585,13 +4585,17 @@ function library:colorpicker(properties)
 		dragging_sat = true
 	end)
 
-	cfg.saved_color = hsv(h, s, v)
-	local selected = normal
-	flags[cfg.flag]["animation"] = "normal"
+		cfg.saved_color = hsv(h, s, v)
+		local selected = "normal"
+		local selected_button = normal
+		flags[cfg.flag]["animation"] = "normal"
 
 		rainbow.MouseButton1Down:Connect(function()
-			selected.BackgroundTransparency = 1
-			selected = rainbow
+			if selected_button then
+				selected_button.BackgroundTransparency = 1
+			end
+			selected = "rainbow"
+			selected_button = rainbow
 			rainbow.BackgroundTransparency = 0
 
 			flags[cfg.flag]["animation"] = "rainbow"
@@ -4599,8 +4603,11 @@ function library:colorpicker(properties)
 		end)
 
 		fade_alpha.MouseButton1Down:Connect(function()
-			selected.BackgroundTransparency = 1
-			selected = fade_alpha
+			if selected_button then
+				selected_button.BackgroundTransparency = 1
+			end
+			selected = "fade_alpha"
+			selected_button = fade_alpha
 			fade_alpha.BackgroundTransparency = 0
 
 			flags[cfg.flag]["animation"] = "fade_alpha"
@@ -4608,8 +4615,11 @@ function library:colorpicker(properties)
 		end)
 
 		fade.MouseButton1Down:Connect(function()
-			selected.BackgroundTransparency = 1
-			selected = fade
+			if selected_button then
+				selected_button.BackgroundTransparency = 1
+			end
+			selected = "fade"
+			selected_button = fade
 			fade.BackgroundTransparency = 0
 
 			flags[cfg.flag]["animation"] = "fade"
@@ -4617,13 +4627,16 @@ function library:colorpicker(properties)
 		end)
 
 		normal.MouseButton1Down:Connect(function()
-			selected.BackgroundTransparency = 1
-			selected = normal
+			if selected_button then
+				selected_button.BackgroundTransparency = 1
+			end
+			selected = "normal"
+			selected_button = normal
 			normal.BackgroundTransparency = 0
 
 			flags[cfg.flag]["animation"] = "normal"
 			cfg.set(cfg.saved_color)
-	end)
+		end)
 
 	uis.InputEnded:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
